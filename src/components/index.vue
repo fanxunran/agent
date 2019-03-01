@@ -7,7 +7,9 @@
         <el-aside width="200px">
           <AsideBar></AsideBar>
         </el-aside>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view/>
+        </el-main>
       </el-container>
     </el-container>
 </template>
@@ -15,6 +17,7 @@
 <script>
 import AsideBar from '@/components/AsideBar';
 import Header from "@/components/Header";
+// import configList from "@/components/configList";
 export default {
   name: 'HelloWorld',
   components: {AsideBar, Header},
