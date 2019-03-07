@@ -50,7 +50,7 @@ export default {
 
   .el-main {
     position: absolute;
-    left: 180px;
+    left: 200px;
     right: 0;
     top: 72px;
     height: 100%;

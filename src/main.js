@@ -6,6 +6,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './style/reset.css'
 import App from './App'
 import router from './router'
+//引入echarts库
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
+//配置代理引入文件
+// import axios from 'axios'
+// Vue.prototype.axios = axios
+// axios.defaults.baseURL = '/api'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
