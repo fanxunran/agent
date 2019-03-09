@@ -1,67 +1,36 @@
 <template>
-  <div class="dss_chart_pie"
-       :style="{width,height}">
+  <div class="dss_chart_pie">
     <chart :options="options"></chart>
-    <div>
-      <span>{{count|rate}}<b>{{title}}</b></span>
-    </div>
   </div>
 </template>
 
 <script>
 import Chart from './Chart';
+import pie from '../../assembler/pie'
 export default {
   components: {
     Chart
   },
-  props: {
-    title: String,
-    width: {
-      type: String,
-      default: '160px'
-    },
-    height: {
-      type: String,
-      default: '160px'
-    },
-    count: {
-      type: Number,
-      default: 0
-    },
-    otherCount: {
-      type: Number,
-      default: -1
-    },
-    mColor: {
-      type: String,
-      default: '#3499FE'
-    },
-    bgColor: {
-      type: String,
-      default: 'rgba(218, 224, 230, 0.4)'
+  data (){
+    return{
+      options:null,
     }
   },
   computed: {
-    options() {
-      return {
-        color: [this.mColor, this.bgColor],
-        series: [
-          {
-            type: 'pie',
-            radius: ['60%', '90%'],
-            label: {
-              normal: {
-                show: false
-              },
-              emphasis: {
-                show: false
-              }
-            },
-            silent: true,
-            data: [this.count, this.otherCount === -1 ? 1 - this.count : this.otherCount]
-          }
-        ]
-      };
+
+  },
+  mounted(){
+    this.options = pie.pie(this.fakeData());
+  },
+  methods: {
+    fakeData(){
+       const pieData = [
+          {tradeChannel: "扫码购", tradePercent: 0.001907978725254542},
+          {tradeChannel: "SCO2.0", tradePercent: 0.08874536049840509},
+          {tradeChannel: "O2O", tradePercent: 0.31113967378259827},
+          {tradeChannel: "普通收银机", tradePercent: 0.5982069869937421}
+        ];
+      return pieData;
     }
   }
 };
@@ -71,6 +40,8 @@ export default {
   display: inline-block;
   position: relative;
   vertical-align: middle;
+  width:100%;
+  height:100%;
 }
 .dss_chart_pie div {
   display: flex;

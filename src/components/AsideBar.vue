@@ -28,7 +28,8 @@ export default {
         { path: '/index/taskList', label: '任务列表' },
         { path: '/index/dataSourceList', label: '数据源列表' },
         { path: '/index/getDataSource', label: 'SQL查询' },
-        { path: '/index/addTask', label: '新增任务' }
+        { path: '/index/addTask', label: '新增任务' },
+        { path: '/index/overview', label: '新增任务' }
       ],
       key: ''
     }
