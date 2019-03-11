@@ -24,6 +24,7 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(echarts)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

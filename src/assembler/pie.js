@@ -1,7 +1,22 @@
 import dataParser from './dataParser.js';
-
+import echarts from 'echarts';
 const defaultColor = ['#7EB9FF', '#50DAC3', '#B386F2', '#FFD392', '#FF924E'];
-
+const gradualColor = [
+  new echarts.graphic.LinearGradient(1, 0, 0, 0, [
+    {
+      offset: 0,
+      color: '#32FFEA'
+    },
+    {
+      offset: 1,
+      color: '#32FFEA'
+    }
+  ]),
+  '#FFD032',
+  '#FF327A',
+  '#324EFF',
+  '#FF5454'
+];
 export default {
   /**
    * 饼图
@@ -15,8 +30,10 @@ export default {
       keys.push(item);
     });
     let seriesData = dataParser.parseWithoutGroup(sourceData, keys[0], keys[1]);
+
     return {
-      color: defaultColor,//配置各个部分的颜色
+      //配置渐变色
+      color: defaultColor,//配置各个部分的颜色,defaultColor单色,gradualColor渐变
       //标题
       title: {
         text: '', //标题
@@ -30,8 +47,16 @@ export default {
         formatter: '{b} : {c} ({d}%)'
       },
       //组建
+
       legend: {
-        show: false,
+        show: true,
+        icon: 'circle',//图表的样式rect，circle
+        textStyle: {//内容的样式
+          color: '#333333',
+          fontSize: 12,
+          fontWeight: 400,
+          fontFamily: 'PingFangSC-Regular'
+        },
         orient: 'horizontal', //垂直：vertical； 水平 horizontal
         bottom: 'bottom',
         right: 'right',
@@ -54,10 +79,24 @@ export default {
             }
           },
           label: {
-            normal: {
+            color: '#999999',
+            formatter: '{b} : {c} ({d}%)',//{a}：系列名。{b}：数据名。{c}：数据值。{d}：百分比。
+            // position: 'center',
+            show: true,
+            textStyle: {//内容的样式
               color: '#333333',
-              formatter: '{b}\n\n{c}'
-            }
+              fontSize: 12,
+              fontWeight: 400,
+              fontFamily: 'PingFangSC-Regular'
+            },
+            // rich: {
+            //   percent: {
+            //     fontSize: 20,
+            //     color: '#fff',
+            //     fontFamily: 'din',
+            //     verticalAlign: 'bottom'
+            //   }
+            // }
           },
           //引导线
           labelLine: {

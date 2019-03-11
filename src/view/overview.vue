@@ -1,29 +1,45 @@
 <template>
 <div class="content">
-  <el-row>
-    <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+  <el-row :gutter="20">
+    <el-col :span="24"><div class="grid-content bg-purple-dark">
+        <ChartTrend></ChartTrend>
+    </div></el-col>
   </el-row>
-  <el-row>
+  <el-row :gutter="20">
     <el-col :span="12">
       <div class="grid-content bg-purple">
-      <ChartPie></ChartPie>
+
       </div>
     </el-col>
-    <el-col :span="12"><div class="grid-content bg-purple-light"></div></el-col>
+    <el-col :span="12">
+      <div class="grid-content bg-purple-light">
+        <Chartbar></Chartbar>
+    </div>
+    </el-col>
   </el-row>
-  <el-row>
-    <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="8"><div class="grid-content bg-purple-light"></div></el-col>
-    <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
+  <el-row :gutter="20">
+    <el-col :span="8"><div class="grid-content bg-purple">
+      <ChartbarXShadow></ChartbarXShadow>
+    </div></el-col>
+    <el-col :span="8"><div class="grid-content bg-purple-light">
+      <ChartbarYShadow></ChartbarYShadow>
+    </div></el-col>
+    <el-col :span="8"><div class="grid-content bg-purple">
+      <ChartPie></ChartPie>
+    </div></el-col>
   </el-row>
 </div>
 </template>
 
 <script>
   import ChartPie from '../components/common/ChartPie'
+  import Chartbar from '../components/common/Chartbar'
+  import ChartTrend from '../components/common/ChartTrend'
+  import ChartbarYShadow from '../components/common/ChartbarYShadow'
+  import ChartbarXShadow from '../components/common/ChartbarXShadow'
   export default {
     name: 'overview',
-    components:{ChartPie},
+    components:{ChartPie, Chartbar, ChartbarXShadow, ChartbarYShadow, ChartTrend},
     data(){
       return{
 
@@ -55,6 +71,8 @@
     border-radius: 4px;
     min-height: 36px;
     height:300px;
+    background: #ffffff;
+    padding: 20px;
   }
   .row-bg {
     padding: 10px 0;

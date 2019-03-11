@@ -23,7 +23,7 @@ export default {
     options: null,
     height: {
       type: String,
-      default: '400px'
+      default: '100%'
     },
     width: {
       type: String,

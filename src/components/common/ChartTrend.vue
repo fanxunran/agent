@@ -1,59 +1,163 @@
 <template>
   <div class="dss_chart_trend">
-    <dl>
-      <template v-for="(item,index) in data" v-if="index<3">
-        <dt><i>{{index+1}}.</i>{{item.fName}}</dt>
-        <dd>
-          <ul>
-            <!-- <el-tooltip placement="top" popper-class="red" enterable>
-              <div slot="content" v-html="getTip(item.fUserCount)"></div>
-              <li></li>
-            </el-tooltip> -->
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-          <span>{{Number(item.fUserCount).toLocaleString()}}</span>
-        </dd>
-      </template>
-    </dl>
+    <div class="da-block bar-box"
+         v-loading="overviewLoading.trend">
+      <div class="bar-action-box action-float">
+        <span class="da-block-title bar-title">指标小时趋势</span>
+        <span class="bar-action"
+              :class="trendType.value === trendTypeEnum.NEW.value ? 'bar-action-active' : ''"
+              @click="trendType = trendTypeEnum.NEW">
+          新增会员
+        </span>
+        <span class="bar-action"
+              :class="trendType.value === trendTypeEnum.ACTIVE.value ? 'bar-action-active' : ''"
+              @click="trendType = trendTypeEnum.ACTIVE">
+          活跃会员数
+        </span>
+        <span class="bar-action"
+              :class="trendType.value === trendTypeEnum.NEW_RATE.value ? 'bar-action-active' : ''"
+              @click="trendType = trendTypeEnum.NEW_RATE">
+          新增会员占比
+        </span>
+        <span class="bar-action"
+              :class="trendType.value === trendTypeEnum.CUST_PRICE.value ? 'bar-action-active' : ''"
+              @click="trendType = trendTypeEnum.CUST_PRICE">
+          会员客单价
+        </span>
+      </div>
+      <chart :options="trendOptions"
+             height="300px"
+             :key="trendType.value"
+      ></chart>
+    </div>
   </div>
 </template>
 
 <script>
+  import Chart from './ChartEmpty';
+  const trendTypeEnum = {
+    NEW: { value: 'new', label: '新增会员' },
+    ACTIVE: { value: 'active', label: '活跃会员数' },
+    NEW_RATE: { value: 'newRage', label: '新增会员占比' },
+    CUST_PRICE: { value: 'custPrice', label: '会员客单价' },
+    CON_RATE: { value: 'conRate', label: '会员贡献率' }
+  };
+  const lgendEnum = { LAST_WEEK: { label: '上周同期', value: 'last' }, TODAY: { label: '今日', value: 'new' } };
 export default {
-  props: {
-    formatter: {
-      type: Function,
-      default: null
-    },
-    data: {
-      type: Array,
-      default () {
-        return []
-      }
+  components:{Chart},
+  data() {
+    return{
+      valueType: trendTypeEnum.NEW,
+      trendOptions: null,
     }
   },
+  mounted() {
+    // this.setTrendLineOptions()
+  },
+
   methods: {
-    getTip (val) {
-      return `<div class="dss_tooltip_d">2018-05-21<br/>客流量：${Number(val).toLocaleString()}</div>`
+    /**
+     * 设置贡献分析报表options
+     */
+    setTrendLineOptions() {
+      let valueType = 'newMember';
+
+      switch (this.trendType.value) {
+        case trendTypeEnum.NEW.value:
+          this.trendData = this.newData;
+          valueType = 'newMember';
+          break;
+        case trendTypeEnum.ACTIVE.value:
+          this.trendData = this.activeData;
+          valueType = 'activeMember';
+          break;
+        case trendTypeEnum.NEW_RATE.value:
+          this.trendData = this.newRateData;
+          valueType = 'rate';
+          break;
+        case trendTypeEnum.CUST_PRICE.value:
+          valueType = 'pac';
+          this.trendData = this.custPriceData;
+          break;
+      }
+
+      if (!this.trendData || !this.trendData.length) {
+        return;
+      }
+
+      const sortLegendData = [lgendEnum.TODAY, lgendEnum.LAST_WEEK];
+      this.trendOptions = line.assembleLineOptions(
+        this.trendData,
+        'statDate',
+        valueType,
+        'timeGroup',
+        time.getTimeList(1, 24),
+        sortLegendData
+      );
+
+      if (this.trendOptions) {
+        if (this.trendType === trendTypeEnum.NEW_RATE) {
+          this.trendOptions.yAxis[0].axisLabel.formatter = '{value} %';
+          this.trendOptions.yAxis[0].max = 100;
+        } else {
+          this.trendOptions.yAxis[0].axisLabel.formatter = '{value}';
+          this.trendOptions.yAxis[0].max = null;
+        }
+      }
+    },
+    fakeTrendData() {
+      return [
+        {
+          orderTime: '06:00',
+          value: '420',
+          type: 'new'
+        },
+        {
+          orderTime: '07:00',
+          value: '420',
+          type: 'new'
+        },
+        {
+          orderTime: '08:00',
+          value: '420',
+          type: 'new'
+        },
+        {
+          orderTime: '09:00',
+          value: '420',
+          type: 'new'
+        },
+        {
+          orderTime: '10:00',
+          value: '420',
+          type: 'new'
+        },
+        {
+          orderTime: '06:00',
+          value: '520',
+          type: 'last'
+        },
+        {
+          orderTime: '07:00',
+          value: '620',
+          type: 'last'
+        },
+        {
+          orderTime: '08:00',
+          value: '720',
+          type: 'last'
+        },
+        {
+          orderTime: '09:00',
+          value: '820',
+          type: 'last'
+        },
+        {
+          orderTime: '10:00',
+          value: '920',
+          type: 'last'
+        }
+      ];
     }
   }
 }
@@ -63,62 +167,16 @@ export default {
   position: relative;
   text-align: left;
   margin-top: 16px;
-}
-.dss_chart_trend i {
-  font-style: normal;
-  margin-right: 10px;
-}
-.dss_chart_trend dt {
-  margin-top: 50px;
-}
-.dss_chart_trend dt:first-child {
-  margin: 0;
-}
-.dss_chart_trend dl,
-.dss_chart_trend dd,
-.dss_chart_trend ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.dss_chart_trend dd {
-  height: 30px;
-  font-size: 0;
-  margin-top: 10px;
-}
-.dss_chart_trend ul {
-  height: 100%;
-}
-.dss_chart_trend ul,
-.dss_chart_trend span {
-  display: inline-block;
-  width: 50%;
-}
+  width:100%;
+  height:100%;
 
-.dss_chart_trend ul::after {
-  content: '';
-  display: inline-block;
-  height: 30px;
-  vertical-align: bottom;
-}
-.dss_chart_trend li {
-  width: 4px;
-  height: 0;
-  display: inline-block;
-  vertical-align: bottom;
-  margin-left: 2px;
-  height: attr(data-val) " ";
-  background-color: #FB6042
-}
-.dss_chart_trend span {
-  color: #3B4757;
-  font-weight: bold;
-  font-size: 22px;
-}
-@media screen and (max-width: 1160px) {
-  .dss_chart_trend ul,
-  .dss_chart_trend span {
-    width: 100%;
+  .bar-box {
+    position: relative;
+
+    .action-float {
+      position: absolute;
+    }
   }
 }
+
 </style>

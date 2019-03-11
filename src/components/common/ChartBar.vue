@@ -1,127 +1,46 @@
 <template>
-  <div :style="{height}">
+  <div class="dss_chart_bar">
     <chart :options="options"></chart>
   </div>
 </template>
 
 <script>
-import Chart from './Chart'
+  import Chart from './ChartEmpty';
+  import bar from '../../assembler/bar'
 export default {
   components: {
     Chart
   },
-  props: {
-    data: {
-      type: Array,
-      default () {
-        return []
-      }
-    },
-    height: {
-      type: String,
-      default: '180px'
-    },
-    mColor: {
-      type: String,
-      default: '#3499FE'
-    },
-    bgColor: {
-      type: String,
-      default: '#eff3f6'
-    },
-    keyName: {
-      type: String,
-      default: 'portraitName'
-    },
-    valName: {
-      type: String,
-      default: 'portraitRate'
+  data(){
+    return{
+      options:null,
     }
   },
-  computed: {
-    options () {
-      var dataAxis = []
-      var data = []
-      var yMax = 100
-      var dataShadow = []
-
-      this.data.forEach(item => {
-        dataAxis.push(item[this.keyName])
-        data.push((item[this.valName]*100).toFixed(1))
-        dataShadow.push(yMax)
-      })
-
-      return {
-        grid: {
-          top: 0,
-          bottom: 0,
-          right: 0,
-          left: 0,
-          containLabel: true
-        },
-        tooltip: {
-          formatter: '{c}%<br/>{b}',
-          padding: [5, 20]
-        },
-        xAxis: {
-          data: dataAxis,
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            interval: 0,
-            color: '#2e3b4b'
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#eaeaea'
-            }
-          }
-        },
-        yAxis: {
-          axisLabel: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          }
-        },
-        series: [
-          {
-            itemStyle: {
-              color: this.mColor
-            },
-            type: 'bar',
-            data: data,
-            z: 10,
-            label: {
-              position: 'top',
-              show: true,
-              formatter: '{c}%'
-            }
-          },
-          {
-            type: 'bar',
-            itemStyle: {
-              color: this.bgColor,
-              barBorderRadius: [20, 20, 0, 0]
-            },
-            barGap: '-100%',
-            barCategoryGap: '40%',
-            data: dataShadow,
-            silent: true,
-            animation: false
-          }
-        ]
-      }
+  mounted(){
+    this.options = bar.assembleBarXOptions(this.fakeData(), 'date', 'salesVolume', 'level',);
+  },
+  methods: {
+    fakeData(){
+      const pieData = [
+        {date: '10/1', salesVolume: 10, level: '高'},
+        {date: '10/2', salesVolume: 130, level: '高'},
+        {date: '10/3', salesVolume: 150, level: '高'},
+        {date: '10/4', salesVolume: 100, level: '高'},
+        {date: '10/3', salesVolume: 150, level: '中'},
+        {date: '10/4', salesVolume: 100, level: '低'},
+      ];
+      return pieData;
     }
   }
 }
 </script>
+<style>
+  .dss_chart_bar {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    width:100%;
+    height:100%;
+  }
+</style>
 

@@ -105,7 +105,8 @@ export default {
       categories.push(item[name] || '');
       //定义一个中间变量
       let tempData = {
-        value: item[value] || 0,
+        // value: filters.percent(item[value]) || 0,
+        value: item[value].toFixed(2) || 0,
         name: item[name] || ''
       };
       data.push(tempData);
