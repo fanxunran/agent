@@ -1,7 +1,7 @@
 <template>
   <div class="dss_chart_trend">
     <div class="da-block bar-box"
-         v-loading="overviewLoading.trend">
+         >
       <div class="bar-action-box action-float">
         <span class="da-block-title bar-title">指标小时趋势</span>
         <span class="bar-action"
@@ -35,6 +35,8 @@
 
 <script>
   import Chart from './ChartEmpty';
+  import line from '../../assembler/line'
+  import time from '../../utils/time.js';
   const trendTypeEnum = {
     NEW: { value: 'new', label: '新增会员' },
     ACTIVE: { value: 'active', label: '活跃会员数' },
@@ -47,12 +49,15 @@ export default {
   components:{Chart},
   data() {
     return{
-      valueType: trendTypeEnum.NEW,
+      newData: null,
+      trendTypeEnum,
+      trendType: trendTypeEnum.NEW,
       trendOptions: null,
     }
   },
   mounted() {
-    // this.setTrendLineOptions()
+    this.newData = this.fakeTrendData();
+    this.setTrendLineOptions()
   },
 
   methods: {
@@ -88,9 +93,9 @@ export default {
       const sortLegendData = [lgendEnum.TODAY, lgendEnum.LAST_WEEK];
       this.trendOptions = line.assembleLineOptions(
         this.trendData,
-        'statDate',
+        'orderTime',
         valueType,
-        'timeGroup',
+        'type',
         time.getTimeList(1, 24),
         sortLegendData
       );
@@ -109,52 +114,52 @@ export default {
       return [
         {
           orderTime: '06:00',
-          value: '420',
+          newMember: 20,
           type: 'new'
         },
         {
           orderTime: '07:00',
-          value: '420',
+          newMember: 40,
           type: 'new'
         },
         {
           orderTime: '08:00',
-          value: '420',
+          newMember: 42,
           type: 'new'
         },
         {
           orderTime: '09:00',
-          value: '420',
+          newMember: 40,
           type: 'new'
         },
         {
           orderTime: '10:00',
-          value: '420',
+          newMember: 400,
           type: 'new'
         },
         {
           orderTime: '06:00',
-          value: '520',
+          newMember: 520,
           type: 'last'
         },
         {
           orderTime: '07:00',
-          value: '620',
+          newMember: 20,
           type: 'last'
         },
         {
           orderTime: '08:00',
-          value: '720',
+          newMember: 70,
           type: 'last'
         },
         {
           orderTime: '09:00',
-          value: '820',
+          newMember: 80,
           type: 'last'
         },
         {
           orderTime: '10:00',
-          value: '920',
+          newMember: 90,
           type: 'last'
         }
       ];
@@ -162,19 +167,49 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 .dss_chart_trend {
   position: relative;
   text-align: left;
   margin-top: 16px;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 
   .bar-box {
     position: relative;
 
     .action-float {
       position: absolute;
+    }
+    .bar-action-box {
+      z-index: 1;
+      overflow: hidden;
+
+      .bar-title {
+        height: 22px;
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: #222b4d;
+        line-height: 22px;
+        margin-right: 31px;
+      }
+      .bar-action-active {
+        color: #3879fb;
+        border-bottom: 2px solid #3879fb;
+      }
+      .bar-action + .bar-action {
+        margin-left: 20px;
+      }
+      .bar-action {
+        height: 20px;
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: #999999;
+        line-height: 20px;
+        cursor: pointer;
+      }
     }
   }
 }
