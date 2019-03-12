@@ -7,6 +7,7 @@ import './style/reset.css'
 import App from './App'
 import router from './router'
 import filters from './utils/filters';
+import 'echarts/map/js/china.js';//解决地图只出现海南诸岛bug
 
 //引入echarts库
 import echarts from 'echarts'

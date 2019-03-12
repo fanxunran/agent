@@ -41,8 +41,7 @@
     NEW: { value: 'new', label: '新增会员' },
     ACTIVE: { value: 'active', label: '活跃会员数' },
     NEW_RATE: { value: 'newRage', label: '新增会员占比' },
-    CUST_PRICE: { value: 'custPrice', label: '会员客单价' },
-    CON_RATE: { value: 'conRate', label: '会员贡献率' }
+    CUST_PRICE: { value: 'custPrice', label: '会员客单价' }
   };
   const lgendEnum = { LAST_WEEK: { label: '上周同期', value: 'last' }, TODAY: { label: '今日', value: 'new' } };
 export default {
@@ -50,17 +49,85 @@ export default {
   data() {
     return{
       newData: null,
+      activeData: null,
+      newRateData: null,
+      custPriceData: null,
       trendTypeEnum,
       trendType: trendTypeEnum.NEW,
       trendOptions: null,
+      trendData: null
     }
   },
   mounted() {
-    this.newData = this.fakeTrendData();
-    this.setTrendLineOptions()
+    this.listNewData();
   },
-
+  watch: {
+    trendType(newVal, oldVal) {
+      this.trendData = null;
+      switch (newVal) {
+        case trendTypeEnum.NEW:
+          this.setNewOptions();
+          break;
+        case trendTypeEnum.ACTIVE:
+          this.setActiveOptions();
+          break;
+        case trendTypeEnum.NEW_RATE:
+          this.setNewRateOptions();
+          break;
+        case trendTypeEnum.CUST_PRICE:
+          this.setCustPriceOptions();
+          break;
+      }
+    }
+  },
   methods: {
+    setNewOptions() {
+      if (!this.newData) {
+        this.listNewData();
+      } else {
+        this.setTrendLineOptions();
+      }
+    },
+    setActiveOptions() {
+      if (!this.activeData) {
+        this.listActiveData();
+      } else {
+        this.setTrendLineOptions();
+      }
+    },
+    setNewRateOptions() {
+      if (!this.newRateData) {
+        this.listNewRateData();
+      } else {
+        this.setTrendLineOptions();
+      }
+    },
+    setCustPriceOptions() {
+      if (!this.custPriceData) {
+        this.listCustPriceData();
+      } else {
+        this.setTrendLineOptions();
+      }
+    },
+    listNewData() {
+        this.newData = this.fakeTrendData();
+        this.setTrendLineOptions();
+    },
+    listActiveData()
+    {
+      this.activeData = this.fakeTrendData();
+      this.setTrendLineOptions();
+    },
+    listCustPriceData()
+    {
+      this.custPriceData = this.fakeTrendData();
+      this.setTrendLineOptions();
+    },
+    listNewRateData()
+    {
+      this.newRateData = this.fakeTrendData();
+      this.setTrendLineOptions();
+    },
     /**
      * 设置贡献分析报表options
      */
@@ -171,7 +238,6 @@ export default {
 .dss_chart_trend {
   position: relative;
   text-align: left;
-  margin-top: 16px;
   width: 100%;
   height: 100%;
 

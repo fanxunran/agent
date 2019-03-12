@@ -8,7 +8,7 @@
   <el-row :gutter="20">
     <el-col :span="12">
       <div class="grid-content bg-purple">
-
+        <ChartMap></ChartMap>
       </div>
     </el-col>
     <el-col :span="12">
@@ -28,6 +28,10 @@
       <ChartPie></ChartPie>
     </div></el-col>
   </el-row>
+  <el-row :gutter="20">
+    <el-col :span="24"><div class="grid-content bg-purple-dark">
+    </div></el-col>
+  </el-row>
 </div>
 </template>
 
@@ -37,9 +41,10 @@
   import ChartTrend from '../components/common/ChartTrend'
   import ChartbarYShadow from '../components/common/ChartbarYShadow'
   import ChartbarXShadow from '../components/common/ChartbarXShadow'
+  import ChartMap from '../components/common/ChartMap'
   export default {
     name: 'overview',
-    components:{ChartPie, Chartbar, ChartbarXShadow, ChartbarYShadow, ChartTrend},
+    components:{ChartMap, ChartPie, Chartbar, ChartbarXShadow, ChartbarYShadow, ChartTrend},
     data(){
       return{
 

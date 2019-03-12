@@ -1,136 +1,56 @@
 <template>
-  <div class="dss_chart_map" :style="{width:`${width}px`,height:`${height}`}"  ref="chart"></div>
+  <div class="dss_chart_map">
+    <span class="title">地图占比</span>
+    <chart :options="options"></chart>
+  </div>
 </template>
 
 <script>
-import '@/dss-common/utils/china'
-import { provinceData, cityData } from '@/dss-common/utils/data'
-import echarts from 'echarts'
+  import Chart from './ChartEmpty';
+  import map from '../../assembler/map'
 export default {
-  props: {
-    width: {
-      type: String,
-      default: '100%'
-    },
-    height: {
-      type: String,
-      default: '100%'
-    },
-    type: {
-      type: String,
-      default: ''
-    },
-    data: {
-      type: Array,
-      default () {
-        return []
-      }
-    },
-    colorList: {
-      type: Array,
-      default () {
-        return ['#FB6042', '#F9B723', '#3399FF ']
-      }
-    },
-    keyName: {
-      type: String,
-      default: 'fName'
-    },
-    valName: {
-      type: String,
-      default: 'fUserCount'
-    }
+  components: {
+    Chart
   },
   data () {
     return {
-      chart: null
+      options:null,
     }
   },
-  watch: {
-    type () {
-      this.setOption()
-    }
+  mounted(){
+    this.options = map.assembleMapOptions(this.fakeData(), 'name', 'value' , 'type');
   },
   methods: {
-    setOption () {
-      const data = []
-      const mapData = this.type === '省份' ? provinceData : cityData
-      this.data.forEach((item, index) => {
-        const geoCoord = mapData[item[this.keyName].replace(/(市|省)$/, '')]
-        if (geoCoord) {
-          data.push({
-            name: item[this.keyName],
-            value: geoCoord.concat(item[this.valName]),
-            itemStyle: {
-              normal: {
-                color: this.colorList[index % this.colorList.length]
-              }
-            }
-          })
-        }
-      })
-      this.chart.clear()
-      this.chart.setOption({
-        tooltip: {
-          trigger: "item",
-          formatter (params) {
-            if (params.seriesIndex === 1) {
-              return
-            }
-            return `${params.name}<br>占比：${Number(params.value[2] * 100.0).toLocaleString()}%`
-          }
-        },
-        geo: {
-          map: 'china',
-          layoutCenter: ['50%', '50%'],
-          layoutSize: '100%',
-          itemStyle: {
-            normal: {
-              areaColor: '#e6ecf1',
-              borderColor: '#fff'
-            },
-            emphasis: {
-              areaColor: '#e2e2e2',
-              borderColor: '#fff'
-            }
-          },
-          label: {
-            emphasis: {
-              show: false
-            }
-          }
-        },
-        series: [{
-          name: '客流量',
-          type: 'effectScatter', // 图表类型
-          coordinateSystem: 'geo', // 坐标系类型
-          symbolSize: 8,
-          // symbolSize (val) {
-          //   return Math.max(val[2] / 10, 8)
-          // },
-          rippleEffect: {
-            brushType: 'stroke',
-            scale: 4
-          },
-          showEffectOn: 'emphasis',
-          hoverAnimation: true,
-          data
-        }]
-      })
-    },
-    resize () {
-      this.chart.resize()
+    fakeData(){
+      const mapData = [
+        {type: 'iphone', name: '湖北', value: 10},
+        {type: '华为', name: '湖南', value: 130},
+        {type: '华为', name: '广东', value: 150},
+        {type: '华为', name: '浙江', value: 100},
+        {type: 'vivo', name: '江西', value: 150},
+        {type: 'iphone', name: '新疆', value: 100},
+      ];
+      return mapData;
     }
-  },
-  mounted () {
-    this.chart = echarts.init(this.$refs.chart)
-    this.setOption()
-    window.addEventListener('resize', this.resize)
-  },
-  beforeDestroy () {
-    window.removeEventListener('resize', this.resize)
   }
 }
 </script>
-<style>
+<style lang="scss">
+  .dss_chart_map {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    width:100%;
+    height:100%;
+    .title{
+      position:absolute;
+      height: 22px;
+      font-size: 16px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: #333333;
+      line-height: 22px;
+      margin-bottom: 15px;
+    }
+  }
 </style>

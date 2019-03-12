@@ -139,5 +139,41 @@ export default {
       seriesData[0].data.push(list);
     });
     return { seriesData };
+  },
+
+  /**
+   * 地图数据
+   * @param sourceData 源数据，数组
+   * @param x 横坐标要展示的值在sourceData数组中的字段
+   * @param y 纵坐标要展示的值在sourceData数组中的字段
+   * @param z 展示的值的标签
+   * @param w 展示的值的name
+   * 如数据源是[{x: '1', y: 1,,z:1 w: 'chine'}]
+   * 那么x的值传time,y的值传salesVolume，z的值传level
+   * @returns {{seriesData: Array}}
+   */
+  parseMapData(sourceData, x, y, z) {
+    //遍历
+    const dataMap = {};
+    sourceData.forEach(item => {
+      const key = z ? item[z] : 'z';
+      if (dataMap[key]) {
+        let data= {
+          name: item.name,
+          value: item.value
+        };
+        dataMap[key].push(data);
+      } else {
+        dataMap[key] = [];
+        let data= {
+          name: item.name,
+          value: item.value
+        };
+        dataMap[key].push(data);
+      }
+    });
+    return {
+      dataMap
+    };
   }
 };

@@ -1,5 +1,6 @@
 <template>
   <div class="dss_chart_bar">
+    <span class="title">内容占比</span>
     <chart :options="options"></chart>
   </div>
 </template>
@@ -34,13 +35,23 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
   .dss_chart_bar {
     display: inline-block;
     position: relative;
     vertical-align: middle;
     width:100%;
     height:100%;
+    .title{
+      position:absolute;
+      height: 22px;
+      font-size: 16px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: #333333;
+      line-height: 22px;
+      margin-bottom: 15px;
+    }
   }
 </style>
 
