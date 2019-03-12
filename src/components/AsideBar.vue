@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import agentApi from '../api/index';
+
 export default {
   name: 'asideBar',
   data() {
@@ -51,15 +51,6 @@ export default {
       console.log('this.checked', this.checked);
       this.$router.push({ path: item.path });
     },
-    getMenuData(){
-      agentApi
-        .configList({
-          key: this.key,
-        })
-        .then(res => {
-          console.log(res.data)
-        });
-    }
   }
 }
 </script>

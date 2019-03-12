@@ -1,12 +1,12 @@
 import services from '../utils/services';
-const SCHEMA = '/athena';
+const ROOT = process.env.API_ROOT;
 export default {
   /**
    * 查询应用管理
    * @param userId
    */
   configList(userId) {
-    return services.get('/agent/parameter/list', {
+    return services.get(ROOT+'/agent/parameter/list', {
       action: '查看所有应用',
       params: { userId }
     });
