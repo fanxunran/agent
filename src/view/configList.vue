@@ -45,14 +45,9 @@
       <el-form-item label="value:">
         <el-input v-model="form.value"></el-input>
       </el-form-item>
-
       <el-form-item label="description:">
         <el-input v-model="form.desc"></el-input>
       </el-form-item>
-      <!--<el-form-item>-->
-        <!--<el-button type="primary" @click="onSubmit">立即创建</el-button>-->
-        <!--<el-button>取消</el-button>-->
-      <!--</el-form-item>-->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">取 消</el-button>
