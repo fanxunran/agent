@@ -46,9 +46,13 @@ module.exports = {
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
+      // {//添加sass库，在vue文件中引用
+      //   test: /\.sass$/,
+      //   loaders: ['style', 'css', 'sass']
+      // },
       {
-        test: /\.sass$/,
-        loaders: ['style', 'css', 'sass']
+        test: /\.less$/,
+        loader: "style-loader!css-loader!less-loader",
       },
       {
         test: /\.js$/,

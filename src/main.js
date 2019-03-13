@@ -18,11 +18,6 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
 });
 
-//配置代理引入文件
-// import axios from 'axios'
-// Vue.prototype.axios = axios
-// axios.defaults.baseURL = '/api'
-
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(echarts)

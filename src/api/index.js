@@ -16,7 +16,7 @@ export default {
    * @param params
    */
   addApplication(params) {
-    return services.post(SCHEMA + '/appmanager/add', params, {
+    return services.post(ROOT + '/agent/parameter/add', params, {
       action: '添加应用'
     });
   }

@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="top-content">
-    <el-button size="small" type="success">增加</el-button>
+    <el-button size="small" type="success" @click="dialogFormVisible = true">增加</el-button>
     <el-input size="small" v-model="key" class="importText"  placeholder="请输入内容"></el-input>
     <el-button size="small" type="primary">查询</el-button>
   </div>
@@ -37,6 +37,28 @@
       </el-table>
     </template>
   </div>
+  <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="key:">
+        <el-input v-model="form.key"></el-input>
+      </el-form-item>
+      <el-form-item label="value:">
+        <el-input v-model="form.value"></el-input>
+      </el-form-item>
+
+      <el-form-item label="description:">
+        <el-input v-model="form.desc"></el-input>
+      </el-form-item>
+      <!--<el-form-item>-->
+        <!--<el-button type="primary" @click="onSubmit">立即创建</el-button>-->
+        <!--<el-button>取消</el-button>-->
+      <!--</el-form-item>-->
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dialogFormVisible = false">取 消</el-button>
+      <el-button type="primary" @click="onSubmit">确 定</el-button>
+    </div>
+  </el-dialog>
 </div>
 </template>
 
@@ -47,7 +69,13 @@
     data(){
       return {
         key:'',
-        tableData:[]
+        tableData:[],
+        dialogFormVisible: false,
+        form: {
+          key: '',
+          value: '',
+          desc: ''
+        }
       }
     },
     mounted(){
@@ -62,16 +90,35 @@
           .then(res => {
             this.tableData = res.data
           });
+      },
+      onSubmit(){
+        const params = this.form;
+        console.log(params);
+        this.dialogFormVisible = false;
+        agentApi
+          .addApplication({
+            params
+          })
+          .then(res =>{
+
+          })
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .importText{
     width:200px;
   }
   .top-content{
     margin-bottom:20px;
+  }
+  .middle-content{
+   .el-table{
+     .el-table__header-wrapper{
+       background: rgba(245, 245, 245, 1);
+     }
+   }
   }
 </style>
