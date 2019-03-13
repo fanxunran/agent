@@ -22,14 +22,8 @@ export default {
   data() {
     return {
       menu: [
-        { path: '/index/configList', label: '参数配置列表' },
-        { path: '/index/reportLog', label: '上报日志列表' },
-        { path: '/index/timerList', label: '定时器列表' },
-        { path: '/index/taskList', label: '任务列表' },
-        { path: '/index/dataSourceList', label: '数据源列表' },
-        { path: '/index/getDataSource', label: 'SQL查询' },
-        { path: '/index/addTask', label: '新增任务' },
-        { path: '/index/overview', label: '新增任务' }
+        { path: '/index/configList', label: '画像分析' },
+        { path: '/index/reportLog', label: '用户人群' },
       ],
       key: ''
     }
