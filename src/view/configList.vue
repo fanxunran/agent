@@ -17,33 +17,25 @@
           key: '',
           value: '',
           desc: ''
-        }
+        },
+        pn: 1,
+        numbers: 20
       }
     },
     mounted(){
-      this.getMenuData()
+      this.getTagcategoryList()
     },
     methods:{
-      getMenuData(){
+      getTagcategoryList(){
         agentApi
-          .configList({
-            key: this.key,
+          .tagcategoryList({
+            pn: this.pn,
+            numbers: this.numbers
           })
           .then(res => {
-            this.tableData = res.data
+            console.log(res.data);
+            // this.tableData = res.data
           });
-      },
-      onSubmit(){
-        const params = this.form;
-        console.log(params);
-        this.dialogFormVisible = false;
-        agentApi
-          .addApplication({
-            params
-          })
-          .then(res =>{
-
-          })
       }
     }
   }

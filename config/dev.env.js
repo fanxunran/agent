@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  API_ROOT: '"//10.19.24.196:9101"'
+  API_ROOT: '"//127.0.0.1:9100/dmp/manage"'//代理配置
 })

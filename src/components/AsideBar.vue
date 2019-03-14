@@ -1,10 +1,7 @@
 <template>
   <el-menu
     default-active="/index/configList"
-    background-color="#324057"
-    text-color="#fff"
-    active-text-color="#409EFF"
-    class="el-menu-vertical-demo">
+    class="el-menu-vertica">
     <el-menu-item v-for="(item,index) in menu"
           :index="item.path"
          :key="index"
@@ -14,7 +11,7 @@
     </el-menu-item>
   </el-menu>
 </template>
-
+<!--background-color: #cfdcf2;-->
 <script>
 
 export default {
@@ -34,12 +31,9 @@ export default {
     },
   },
   mounted(){
-    this.getMenuData()
+
   },
   methods: {
-    handleOpen (){
-
-    },
     jump(item) {
       this.checked = item.path;
       console.log('this.checked', this.checked);
@@ -49,6 +43,17 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+.el-menu{
+  background-color: #eceff3;
+  color: #757575;
+  .side-menu.is-active{
+    background-color: #cfdcf2;
+    color: #3879fb;
+  }
+  .side-menu:hover{
+    background-color: #cfdcf2;
+    color: #3879fb;
+  }
+}
 </style>

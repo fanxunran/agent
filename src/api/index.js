@@ -2,13 +2,13 @@ import services from '../utils/services';
 const ROOT = process.env.API_ROOT;
 export default {
   /**
-   * 查询应用管理
-   * @param userId
+   * 获取标签分类列表
+   * @param params
    */
-  configList(userId) {
-    return services.get(ROOT+'/agent/parameter/list', {
-      action: '查看所有应用',
-      params: { userId }
+  tagcategoryList(params) {
+    return services.get(ROOT + '/tagcategory/list', {
+      params,
+      action: '获取标签分类列表'
     });
   },
   /**
@@ -16,7 +16,7 @@ export default {
    * @param params
    */
   addApplication(params) {
-    return services.post(ROOT + '/agent/parameter/add', params, {
+    return services.post('/agent/parameter/add', params, {
       action: '添加应用'
     });
   }

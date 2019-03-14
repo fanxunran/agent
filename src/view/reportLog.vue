@@ -13,7 +13,7 @@
       }
     },
     mounted(){
-      this.drawLine();
+
     },
     methods: {
 

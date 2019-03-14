@@ -4,7 +4,7 @@
         <Header></Header>
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width="140px">
           <AsideBar></AsideBar>
         </el-aside>
         <el-main>
@@ -44,20 +44,20 @@ export default {
     top: 71px;
     left: 0;
     min-height: 100%;
-    background-color: #324057;
+    background-color: #eceff3;
     z-index: 99;
   }
 
   .el-main {
     position: absolute;
-    left: 200px;
+    left: 140px;
     right: 0;
     top: 72px;
     height: 100%;
     overflow-y: scroll;
     padding-bottom: 30px;
     transition: left 0.3s ease-in-out;
-    background: aliceblue;
+    background: #f2f4f7;
   }
 
   body > .el-container {
