@@ -12,12 +12,21 @@ export default {
     });
   },
   /**
-   * 添加应用
+   * 新增分类
    * @param params
    */
-  addApplication(params) {
-    return services.post('/agent/parameter/add', params, {
-      action: '添加应用'
+  newCategory(params) {
+    return services.post(ROOT + '/tagcategory/add', params, {
+      action: '新增分类'
+    });
+  },
+  /**
+   * 调整标签分类顺序
+   * @param params
+   */
+  categoryMove(params) {
+    return services.post(ROOT + '/tagcategory/move', params, {
+      action: '调整标签分类顺序'
     });
   }
 };

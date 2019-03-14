@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="less">
-  @import './style/da-table.less';
+  /*@import './style/da-table.less';*/
   html,body,#app {
   width: 100%;
   height: 100%;
