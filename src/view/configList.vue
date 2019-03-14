@@ -40,8 +40,14 @@
       </el-table-column>
       <el-table-column
         prop="tagCount"
-        label="标签数量"
-        >
+        label="标签数量">
+        <template slot-scope="scope">
+          <el-button v-if="scope.row.tagCount"
+                     class="formButton"
+                     type="primary"
+                     round
+          @click="">{{scope.row.tagCount}}</el-button>
+        </template>
       </el-table-column>
       <el-table-column
         prop="createTime"
@@ -229,32 +235,43 @@
   .top-content{
     margin-bottom:20px;
   }
-  .middle-content{
-   .el-table{
-     .el-table__header-wrapper{
-       background: rgba(245, 245, 245, 1);
-     }
-   }
-    .dss-pagination{
+  .middle-content {
+    .el-table {
+      .el-table__header-wrapper {
+        background: rgba(245, 245, 245, 1);
+      }
+    }
+    .dss-pagination {
       text-align: right;
       margin-top: 10px;
       position: relative;
     }
-  }
-  .orderTitle{
-    height: 22px;
-    font-size: 14px;
-    font-family: PingFangSC-Regular;
-    font-weight: 400;
-    line-height: 22px;
-    color: #409eff;
-  }
-  .el-input--medium.orderValue{
-    width:40px;
-    height:22px;
 
-    .el-input__inner{
-      height:22px;
+    .formButton {
+      height: 22px;
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      line-height: 22px;
+      margin: 0;
+      padding: 0px 5px;
+      width: 40px;
+    }
+    .orderTitle {
+      height: 22px;
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      line-height: 22px;
+      color: #409eff;
+    }
+    .el-input--medium.orderValue {
+      width: 40px;
+      height: 22px;
+
+      .el-input__inner {
+        height: 22px;
+      }
     }
   }
 </style>
