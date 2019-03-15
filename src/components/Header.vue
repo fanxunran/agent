@@ -11,8 +11,6 @@
       </el-col>
       <el-col :span="6" class="user">
         <div class="btn-fullscreen icon-font"></div>
-
-        </div>
       </el-col>
     </el-row>
   </header>
