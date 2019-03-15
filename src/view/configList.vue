@@ -240,6 +240,7 @@
   }
   .middle-content {
     .el-table {
+      overflow: auto;
       .el-table__header-wrapper {
         background: rgba(245, 245, 245, 1);
       }
@@ -257,7 +258,7 @@
       font-weight: 400;
       line-height: 22px;
       margin: 0;
-      padding: 0px 5px;
+      padding: 0 5px;
       width: 40px;
     }
     .orderTitle {

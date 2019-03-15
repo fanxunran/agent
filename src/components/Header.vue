@@ -44,7 +44,7 @@ export default {
 <style scoped>
   .header-nav {
     width: 100%;
-    height: 60px;
+    height: 50px;
     background: #324057;
     color: #fff;
     border-bottom: 1px solid #1f2d3d;
@@ -66,7 +66,7 @@ export default {
     cursor: pointer;
   }
   .logo-container {
-    line-height: 60px;
+    line-height: 50px;
     min-width: 400px;
     padding: 0 5px;
     text-align: left;
@@ -88,7 +88,7 @@ export default {
   }
 
   .user {
-    line-height: 60px;
+    line-height: 50px;
     text-align: right;
     float: right;
     padding-right: 10px;

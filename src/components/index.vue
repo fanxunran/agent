@@ -41,7 +41,7 @@ export default {
     text-align: center;
     line-height: 200px;
     position: fixed;
-    top: 71px;
+    top: 61px;
     left: 0;
     min-height: 100%;
     background-color: #eceff3;
@@ -52,7 +52,7 @@ export default {
     position: absolute;
     left: 140px;
     right: 0;
-    top: 72px;
+    top: 61px;
     height: 100%;
     overflow-y: scroll;
     padding-bottom: 30px;
