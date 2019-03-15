@@ -26,6 +26,7 @@
       <el-table-column
         prop="descriptions"
         label="分类说明"
+        show-overflow-tooltip
         >
       </el-table-column>
       <el-table-column
@@ -51,7 +52,8 @@
       </el-table-column>
       <el-table-column
         prop="createTime"
-        label="创建时间">
+        label="创建时间"
+        show-overflow-tooltip>
         <template slot-scope = "scope">
           {{scope.row.createTime | formatDate}}
         </template>
@@ -63,7 +65,8 @@
       </el-table-column>
       <el-table-column
         prop="updateTime"
-        label="更新时间">
+        label="更新时间"
+        show-overflow-tooltip>
         <template slot-scope = "scope">
           {{scope.row.updateTime | formatDate}}
         </template>
