@@ -1,9 +1,8 @@
 <template>
-<div>
   <div class="middle-content">
     <p class="title">标签分类</p>
     <div class="con-button">
-      <el-button type="primary" size="mini" round @click="dialogFormVisible = true">添加分类</el-button>
+      <el-button type="primary" size="mini" round @click="addButton">添加分类</el-button>
     </div>
     <el-table
       :data="tableData"
@@ -11,6 +10,7 @@
       <el-table-column
         prop="id"
         label="id"
+        width="50"
         >
       </el-table-column>
       <el-table-column
@@ -41,7 +41,8 @@
       </el-table-column>
       <el-table-column
         prop="tagCount"
-        label="标签数量">
+        label="标签数量"
+        width="100">
         <template slot-scope="scope">
           <el-button v-if="scope.row.tagCount"
                      class="formButton"
@@ -61,6 +62,7 @@
       <el-table-column
         prop="createdBy"
         label="创建者"
+        width="100"
         >
       </el-table-column>
       <el-table-column
@@ -79,6 +81,7 @@
       <el-table-column
         prop="updateCnt"
         label="更新次数"
+        width="100"
         >
       </el-table-column>
       <el-table-column
@@ -88,14 +91,21 @@
           <!--<el-button @click="handleClick(scope.row)" type="text" size="small">调整顺序</el-button>-->
           <span class="orderTitle">调整顺序</span>
           <el-input size="medium" class="orderValue" type="text" v-model.number="order[scope.row.id]" @blur="changeCategoryMove(scope.row.id)"></el-input>
-          <span class="orderTitle">{{scope.row.status=== "Y" ? '上线' : '下线' }}</span>
+
+          <el-tooltip class="item" effect="dark" content="修改上下线状态" placement="top-start">
+            <span class="orderTitle button" @click="TodoUpdateStatus(scope.row)">{{scope.row.status=== "Y" ? '上线' : '下线' }}</span>
+          </el-tooltip>
+          <span class="orderTitle button" @click="gettagcategoryContent(scope.row.id)">修改</span>
         </template>
       </el-table-column>
     </el-table>
 
     <!--新增分类内容-->
-    <el-dialog title="新增分类:" :visible.sync="dialogFormVisible">
+    <el-dialog :title="typeValue.title" :visible.sync="dialogFormVisible">
       <el-form :model="form">
+        <el-form-item v-if="typeValue===typeTitle.UPDATE" label="id:" :label-width="formLabelWidth">
+          <el-input v-model="form.id" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="分类名称:" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
@@ -105,18 +115,16 @@
         <el-form-item label="分类说明:" :label-width="formLabelWidth">
           <el-input v-model="form.descriptions" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="分类名称对应的拼音:" :label-width="formLabelWidth">
-          <el-input v-model="form.namePinyin" autocomplete="off"></el-input>
-        </el-form-item>
         <el-form-item label="业务类型:" :label-width="formLabelWidth">
           <el-input v-model="form.bizType" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addNewCategory">确 定</el-button>
+        <el-button type="primary" @click="operation">{{typeValue.button}}</el-button>
       </div>
     </el-dialog>
+
 
     <!--分页功能-->
     <el-pagination layout="prev, pager, next, jumper, sizes, total"
@@ -129,28 +137,36 @@
                    class="dss-pagination">
     </el-pagination>
   </div>
-</div>
 </template>
 
 <script>
-  import utils from '../utils/date.js';
+  import utils from '../utils/index.js';
   import agentApi from '../api/index';
+  const typeTitle = {
+    ADD: { title: '新增内容', button: '提交'},
+    UPDATE: { title: '更新内容', button: '更新'}
+  };
   export default {
     name: 'configList',
     data(){
       return {
+        typeTitle,
+        typeValue: typeTitle.ADD,
         tableData:[],
         order: [],//调整顺序值
+        status: null,
 
+        operationType: 'ADD',//ADD新增，UPDATE更新
         dialogFormVisible: false,
         form: {
+          id: '',
           name: '',
           code: '',
           descriptions: '',
-          namePinyin: '',
           bizType: ''
         },
         formLabelWidth: '150px',
+
 
         page: {
           pageNo: 1,
@@ -163,7 +179,7 @@
     filters: {
       formatDate(time) {
         var date = new Date(time);
-        return utils.format(date, 'YYYY-MM-DD HH:mm:ss');
+        return utils.timeFormat(date, 'YYYY-MM-DD HH:mm:ss');
       }
     },
 
@@ -172,6 +188,24 @@
     },
 
     methods:{
+      //添加按钮
+      addButton(){
+        this.dialogFormVisible = true;
+        this.typeValue = typeTitle.ADD
+      },
+      //提交
+      operation(){
+        switch (this.typeValue) {
+          case typeTitle.ADD :
+            this.addNewCategory();
+            break;
+          case typeTitle.UPDATE :
+            this.TodoUpdateCategory();
+            break;
+          case defalut:
+            break;
+        }
+      },
       //获取标签分类列表
       getTagcategoryList(){
         agentApi
@@ -185,6 +219,19 @@
           });
       },
 
+      //获取单条分类内容
+      gettagcategoryContent(id){
+        agentApi
+          .tagcategoryContent({
+            id: id,
+          })
+          .then(res => {
+            utils.listAssign(this.form ,res.data);
+            this.dialogFormVisible = true;
+            this.typeValue = typeTitle.UPDATE
+          });
+      },
+
       //新增分类
       addNewCategory(){
         let params = {
@@ -195,6 +242,36 @@
           .then(res => {
             this.dialogFormVisible = false;
             this.getTagcategoryList()
+          });
+      },
+
+      //更新分类
+      TodoUpdateCategory(){
+        let params = {
+          ...this.form
+        };
+        agentApi
+          .updateCategory(params)
+          .then(res => {
+            this.dialogFormVisible = false;
+            this.getTagcategoryList()
+          });
+      },
+
+      //更新分类状态
+      TodoUpdateStatus(value){
+        let params = {
+          id: value.id,
+          status: value.status==='Y'? 0 : 1
+        };
+        agentApi
+          .updateStatus(params)
+          .then(res => {
+            this.getTagcategoryList();
+            this.$message({
+              message: '状态更新成功',
+              type: 'success'
+            });
           });
       },
 
@@ -239,8 +316,8 @@
     margin-bottom:20px;
   }
   .middle-content {
-    .el-table {
-      overflow: auto;
+    .el-table.el-table--fit {
+      /*overflow: scroll;*/
       .el-table__header-wrapper {
         background: rgba(245, 245, 245, 1);
       }
@@ -268,6 +345,9 @@
       font-weight: 400;
       line-height: 22px;
       color: #409eff;
+    }
+    .orderTitle.button{
+      cursor: pointer;
     }
     .el-input--medium.orderValue {
       width: 40px;

@@ -28,5 +28,33 @@ export default {
     return services.post(ROOT + '/tagcategory/move', params, {
       action: '调整标签分类顺序'
     });
+  },
+  /**
+   * 更新分类
+   * @param params
+   */
+  updateCategory(params) {
+    return services.post(ROOT + '/tagcategory/update', params, {
+      action: '更新分类'
+    });
+  },
+  /**
+   * 更新分类状态
+   * @param params
+   */
+  updateStatus(params) {
+    return services.post(ROOT + '/tagcategory/status', params, {
+      action: '更新分类状态'
+    });
+  },
+  /**
+   * 获取单条分类内容
+   * @param params
+   */
+  tagcategoryContent(params) {
+    return services.get(ROOT + '/tagcategory/get', {
+      params,
+      action: '获取单条分类内容'
+    });
   }
 };

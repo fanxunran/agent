@@ -346,6 +346,10 @@ const utils = {
       ],
       series: series
     };
+  },
+  //一个对象给另一个对象赋值
+  listAssign(arrA, arrB){
+     Object.keys(arrA).forEach(key => { arrA[key] = arrB[key] || arrA[key]});
   }
 };
 
