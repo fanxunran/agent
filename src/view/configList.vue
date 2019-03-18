@@ -48,7 +48,7 @@
                      class="formButton"
                      type="primary"
                      round
-          @click="">{{scope.row.tagCount}}</el-button>
+          @click="toTagPage(scope.row.code)">{{scope.row.tagCount}}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -291,6 +291,11 @@
           });
       },
 
+      //跳转到标签页
+      toTagPage(value){
+        this.$router.push({ path: '/index/reportLog', query: { code: value } })
+      },
+
       //每页展示条数
       onSizeChange(size) {
         this.page.pageSize = size;
@@ -326,6 +331,7 @@
       text-align: right;
       margin-top: 10px;
       position: relative;
+      margin-bottom: 40px;
     }
 
     .formButton {

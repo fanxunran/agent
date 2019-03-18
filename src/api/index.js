@@ -1,6 +1,7 @@
 import services from '../utils/services';
 const ROOT = process.env.API_ROOT;
 export default {
+  /************************************ 分类接口*************************************/
   /**
    * 获取标签分类列表
    * @param params
@@ -56,5 +57,52 @@ export default {
       params,
       action: '获取单条分类内容'
     });
-  }
+  },
+  /************************************ 标签接口*************************************/
+  /**
+   * 获取标签列表
+   * @param params
+   */
+  tagList(params) {
+    return services.get(ROOT + '/tag/list', {
+      params,
+      action: '获取标签列表'
+    });
+  },
+  /**
+   * 添加标签
+   * @param params
+   */
+  tagAdd(params) {
+    return services.post(ROOT + '/tag/add', params, {
+      action: '添加标签'
+    });
+  },
+  /**
+   * 调整标签顺序
+   * @param params
+   */
+  tagMove(params) {
+    return services.post(ROOT + '/tag/move', params, {
+      action: '调整标签顺序'
+    });
+  },
+  /**
+   * 修改标签状态
+   * @param params
+   */
+  tagStatus(params) {
+    return services.post(ROOT + '/tag/status', params, {
+      action: '修改标签状态'
+    });
+  },
+  /**
+   * 修改标签
+   * @param params
+   */
+  tagUpdate(params) {
+    return services.post(ROOT + '/tag/update', params, {
+      action: '修改标签'
+    });
+  },
 };
