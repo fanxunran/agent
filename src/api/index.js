@@ -105,4 +105,71 @@ export default {
       action: '修改标签'
     });
   },
+  /**
+   * 获取单条标签内容
+   * @param params
+   */
+  tagCategory(params) {
+    return services.get(ROOT + '/tag/category', {
+      params,
+      action: '获取单条标签内容'
+    });
+  },
+  /************************************ 标签接口*************************************/
+  /**
+   * 获取标签列表
+   * @param params
+   */
+  tagValueList(params) {
+    return services.get(ROOT + '/tagvalue/list', {
+      params,
+      action: '获取标签列表'
+    });
+  },
+  /**
+   * 添加标签
+   * @param params
+   */
+  tagValueAdd(params) {
+    return services.post(ROOT + '/tagvalue/add', params, {
+      action: '添加标签'
+    });
+  },
+  /**
+   * 调整标签顺序
+   * @param params
+   */
+  tagValueMove(params) {
+    return services.post(ROOT + '/tagvalue/move', params, {
+      action: '调整标签顺序'
+    });
+  },
+  /**
+   * 修改标签状态
+   * @param params
+   */
+  tagValueStatus(params) {
+    return services.post(ROOT + '/tagvalue/status', params, {
+      action: '修改标签状态'
+    });
+  },
+  /**
+   * 修改标签
+   * @param params
+   */
+  tagValueUpdate(params) {
+    return services.post(ROOT + '/tagvalue/update', params, {
+      action: '修改标签'
+    });
+  },
+  /**
+   * 获取单条标签内容
+   * @param params
+   */
+  tagValueCategory(params) {
+    return services.get(ROOT + '/tagvalue/get', {
+      params,
+      action: '获取单条分类内容'
+    });
+  },
 };

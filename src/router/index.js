@@ -23,14 +23,20 @@ export default new Router({
           path: "/index/configList",
           name: "home",
           component: () => import("../view/configList"),
-          meta: {title: "画像分析"}
+          meta: {title: "分类"}
         },
         {
           path: "/index/reportLog",
           name: "home",
           component: () => import("../view/reportLog"),
-          meta: {title: "我的人群"}
-        }
+          meta: {title: "标签"}
+        },
+        {
+          path: "/index/tagValue",
+          name: "home",
+          component: () => import("../view/tagValue"),
+          meta: {title: "标签值"}
+        },
       ]
     }
   ]

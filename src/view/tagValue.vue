@@ -80,10 +80,10 @@
         width="160">
       </el-table-column>
       <el-table-column
-      prop="graphType"
-      label="报表类型"
-      width="100">
-    </el-table-column>
+        prop="graphType"
+        label="报表类型"
+        width="100">
+      </el-table-column>
       <el-table-column
         prop="dimTypeCode"
         label="关键维度表类型码"
@@ -192,7 +192,7 @@
           <el-input v-model="form.descriptions" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="标签分类code:" :label-width="formLabelWidth">
-        <el-input v-model="form.categoryCode" autocomplete="off"></el-input>
+          <el-input v-model="form.categoryCode" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="标签排序类型:" :label-width="formLabelWidth">
           <el-input v-model="form.tagOrderType" autocomplete="off"></el-input>
@@ -322,7 +322,7 @@
       //获取标签分类列表
       getTagList(){
         agentApi
-          .tagList({
+          .tagValueList({
             pn: this.page.pageNo,
             numbers: this.page.pageSize,
             code: this.code
@@ -406,10 +406,6 @@
           });
       },
 
-      //跳转到标签值页
-      toTagPage(value){
-        this.$router.push({ path: '/index/tagValue', query: { code: value } })
-      },
 
       //每页展示条数
       onSizeChange(size) {
