@@ -1,8 +1,8 @@
 <template>
   <div class="middle-content">
-    <p class="title">标签</p>
+    <p class="title">标签值</p>
     <div class="con-button">
-      <el-button type="primary" size="mini" round @click="addButton">添加标签</el-button>
+      <el-button type="primary" size="mini" round @click="addButton">添加标签值</el-button>
     </div>
     <el-table
       :data="tableData"
@@ -14,12 +14,12 @@
       </el-table-column>
       <el-table-column
         prop="name"
-        label="标签名称"
+        label="维度名称"
         width="100">
       </el-table-column>
       <el-table-column
-        prop="code"
-        label="标签代码"
+        prop="dimValue"
+        label="维度对应的值"
         width="120">
       </el-table-column>
       <el-table-column
@@ -34,86 +34,31 @@
         width="160">
       </el-table-column>
       <el-table-column
-        prop="categoryCode"
-        label="所属标签分类id"
+        prop="typeCode"
+        label="类型编码"
         width="150">
+      </el-table-column>
+      <el-table-column
+        prop="tagCode"
+        label="标签code"
+        width="80">
       </el-table-column>
       <el-table-column
         prop="orderId"
         label="排序id"
-        width="80">
-      </el-table-column>
-      <el-table-column
-        prop="orderType"
-        label="标签值排序类型"
         width="130">
-      </el-table-column>
-      <el-table-column
-        prop="versionId"
-        label="标签版本号"
-        width="110">
       </el-table-column>
       <el-table-column
         prop="queryCnt"
         label="标签使用次数"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="isList"
-        label="是否多值标签"
-        width="120">
-        <template slot-scope="scope">
-          <span>{{scope.row.isList===1? '单值标签': '多值标签'}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="ableMetric"
-        label="是否可用于指标分析"
-        width="160">
-        <template slot-scope="scope">
-          <span>{{scope.row.ableMetric==='Y'? '可用于指标分析': '不可用于指标分析'}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="guiType"
-        label="标签值展示的控件类型"
-        width="160">
-      </el-table-column>
-      <el-table-column
-        prop="graphType"
-        label="报表类型"
-        width="100">
-      </el-table-column>
-      <el-table-column
-        prop="dimTypeCode"
-        label="关键维度表类型码"
-        width="130">
-      </el-table-column>
-      <el-table-column
-        prop="defaultValue"
-        label="标签默认值"
         width="110">
       </el-table-column>
       <el-table-column
-        prop="metadataId"
-        label="标签所属元数据id"
-        width="150">
+        prop="showLevel"
+        label="展示级别"
+        width="120">
       </el-table-column>
-      <el-table-column
-        prop="dimLazySize"
-        label="异步加载标签维度值"
-        width="150">
-      </el-table-column>
-      <el-table-column
-        prop="dimSearchLimit"
-        label="搜索框最大返回值"
-        width="140">
-      </el-table-column>
-      <el-table-column
-        prop="userCount"
-        label="覆盖用户数"
-        width="110">
-      </el-table-column>
+
       <el-table-column
         prop="createTime"
         label="创建时间"
@@ -143,23 +88,7 @@
         label="更新者"
         width="100">
       </el-table-column>
-      <el-table-column
-        prop="updateCnt"
-        label="更新次数"
-        width="100">
-      </el-table-column>
-      <el-table-column
-        prop="valueCount"
-        label="值的数量"
-        width="100">
-        <template slot-scope="scope">
-          <el-button
-            class="formButton"
-            type="primary"
-            round
-            @click="toTagPage(scope.row.code)">{{scope.row.valueCount}}</el-button>
-        </template>
-      </el-table-column>
+
       <el-table-column
         label="操作"
         width="200">
@@ -171,7 +100,7 @@
           <el-tooltip class="item" effect="dark" content="修改上下线状态" placement="top-start">
             <span class="orderTitle button" @click="TodoUpdateStatus(scope.row)">{{scope.row.status=== "Y" ? '上线' : '下线' }}</span>
           </el-tooltip>
-          <span class="orderTitle button" @click="gettagcategoryContent(scope.row.id)">修改</span>
+          <span class="orderTitle button" @click="getTagcategoryContent(scope.row.id)">修改</span>
         </template>
       </el-table-column>
     </el-table>
@@ -185,41 +114,20 @@
         <el-form-item label="标签名称:" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="标签代码:" :label-width="formLabelWidth">
-          <el-input v-model="form.code" autocomplete="off"></el-input>
+        <el-form-item label="维度对应的值:" :label-width="formLabelWidth">
+          <el-input v-model="form.dimValue" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="标签说明:" :label-width="formLabelWidth">
+        <el-form-item label="描述信息:" :label-width="formLabelWidth">
           <el-input v-model="form.descriptions" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="标签分类code:" :label-width="formLabelWidth">
-          <el-input v-model="form.categoryCode" autocomplete="off"></el-input>
+        <el-form-item label="类型编码:" :label-width="formLabelWidth">
+          <el-input v-model="form.typeCode" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="标签排序类型:" :label-width="formLabelWidth">
-          <el-input v-model="form.tagOrderType" autocomplete="off"></el-input>
+        <el-form-item label="标签code:" :label-width="formLabelWidth">
+          <el-input v-model="form.tagCode" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="是否多值标签:" :label-width="formLabelWidth">
-          <el-select v-model="form.isList" autocomplete="off">
-            <el-option label="单值标签" value="1"></el-option>
-            <el-option label="多值标签" value="2"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="是否可用于指标分析:" :label-width="formLabelWidth">
-          <el-select v-model="form.tagAbleMetric" autocomplete="off">
-            <el-option label="可用于指标分析" value="Y"></el-option>
-            <el-option label="不可用于指标分析" value="N"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="标签值展示的控件类型:" :label-width="formLabelWidth">
-          <el-input v-model="form.tagGuiType" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="报表类型:" :label-width="formLabelWidth">
-          <el-input v-model="form.tagGraphType" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="异步加载标签维度值:" :label-width="formLabelWidth">
-          <el-input v-model="form.dimLazySize" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="搜索框最大返回值:" :label-width="formLabelWidth">
-          <el-input v-model="form.dimSearchLimit" autocomplete="off"></el-input>
+        <el-form-item label="展示级别:" :label-width="formLabelWidth">
+          <el-input v-model="form.showLevel" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -265,16 +173,11 @@
         form: {
           id: '',
           name: '',
-          code: '',
+          dimValue: '',
           descriptions: '',
-          isList: 1,
-          tagAbleMetric: 'Y',
-          tagGuiType: '',
-          tagOrderType: '',
-          tagGraphType: '',
-          categoryCode: '',
-          dimLazySize: '',
-          dimSearchLimit: ''
+          typeCode: '',
+          tagCode: '',
+          showLevel: ''
         },
         formLabelWidth: '160px',
 
@@ -334,9 +237,9 @@
       },
 
       //获取单条分类内容
-      gettagcategoryContent(id){
+      getTagcategoryContent(id){
         agentApi
-          .tagCategory({
+          .tagValueCategory({
             ids: id,
             cid: cid
           })
@@ -353,7 +256,7 @@
           ...this.form
         };
         agentApi
-          .tagAdd(params)
+          .tagValueAdd(params)
           .then(res => {
             this.dialogFormVisible = false;
             this.getTagList()
@@ -366,7 +269,7 @@
           ...this.form
         };
         agentApi
-          .tagUpdate(params)
+          .tagValueUpdate(params)
           .then(res => {
             this.dialogFormVisible = false;
             this.getTagList()
@@ -380,7 +283,7 @@
           status: value.status==='Y'? 0 : 1
         };
         agentApi
-          .tagStatus(params)
+          .tagValueStatus(params)
           .then(res => {
             this.getTagList();
             this.$message({
@@ -399,7 +302,7 @@
           site: this.order[value]
         };
         agentApi
-          .tagMove(params)
+          .tagValueMove(params)
           .then(res => {
             this.order = [];
             this.getTagList()
