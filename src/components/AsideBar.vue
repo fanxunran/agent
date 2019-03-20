@@ -19,8 +19,9 @@ export default {
   data() {
     return {
       menu: [
-        { path: '/index/configList', label: '画像分析' },
-        { path: '/index/reportLog', label: '用户人群' },
+        { path: '/index/configList', label: '用户分类' },
+        { path: '/index/privilegeAction', label: '用户角色配置' },
+        { path: '/index/roleAction', label: '角色权限配置' }
       ],
       key: ''
     }

@@ -162,15 +162,16 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width="200">
+        width="240">
         <template slot-scope="scope">
           <!--<el-button @click="handleClick(scope.row)" type="text" size="small">调整顺序</el-button>-->
           <span class="orderTitle">调整顺序</span>
           <el-input size="medium" class="orderValue" type="text" v-model.number="order[scope.row.id]" @blur="changeCategoryMove(scope.row.id)"></el-input>
-
-          <el-tooltip class="item" effect="dark" content="修改上下线状态" placement="top-start">
-            <span class="orderTitle button" @click="TodoUpdateStatus(scope.row)">{{scope.row.status=== "Y" ? '上线' : '下线' }}</span>
-          </el-tooltip>
+          <el-select class="orderValue" v-model="scope.row.status" autocomplete="off" @change="TodoUpdateStatus(scope.row)">
+            <el-option label="在用" value="0"></el-option>
+            <el-option label="下线" value="1"></el-option>
+            <el-option label="废弃" value="2"></el-option>
+          </el-select>
           <span class="orderTitle button" @click="gettagcategoryContent(scope.row.id)">修改</span>
         </template>
       </el-table-column>
@@ -205,8 +206,8 @@
         </el-form-item>
         <el-form-item label="是否可用于指标分析:" :label-width="formLabelWidth">
           <el-select v-model="form.tagAbleMetric" autocomplete="off">
-            <el-option label="可用于指标分析" value="Y"></el-option>
-            <el-option label="不可用于指标分析" value="N"></el-option>
+            <el-option label="可用于指标分析" value="0"></el-option>
+            <el-option label="不可用于指标分析" value="1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="标签值展示的控件类型:" :label-width="formLabelWidth">
@@ -267,8 +268,8 @@
           name: '',
           code: '',
           descriptions: '',
-          isList: 1,
-          tagAbleMetric: 'Y',
+          isList: '1',
+          tagAbleMetric: '0',
           tagGuiType: '',
           tagOrderType: '',
           tagGraphType: '',
@@ -337,8 +338,7 @@
       gettagcategoryContent(id){
         agentApi
           .tagCategory({
-            ids: id,
-            cid: cid
+            id: id
           })
           .then(res => {
             utils.listAssign(this.form ,res.data);
@@ -377,7 +377,7 @@
       TodoUpdateStatus(value){
         let params = {
           id: value.id,
-          status: value.status==='Y'? 0 : 1
+          status: value.status
         };
         agentApi
           .tagStatus(params)
@@ -396,7 +396,7 @@
         if(!this.order[value]){return false;}
         let params = {
           id: value,
-          site: this.order[value]
+          order: this.order[value]
         };
         agentApi
           .tagMove(params)
@@ -473,9 +473,27 @@
     .el-input--medium.orderValue {
       width: 40px;
       height: 22px;
-
+      padding:0;
+      margin:0;
       .el-input__inner {
         height: 22px;
+      }
+
+    }
+    .el-select.orderValue {
+      width: 60px;
+      height: 22px;
+      .el-input.el-input--suffix{
+        .el-input__inner {
+          height: 22px;
+          padding: 3px;
+        }
+        .el-input__suffix {
+          right: 0px;
+          -webkit-transition: all .3s;
+          transition: all .3s;
+          top: 9px;
+        }
       }
     }
   }

@@ -110,7 +110,7 @@ export default {
    * @param params
    */
   tagCategory(params) {
-    return services.get(ROOT + '/tag/category', {
+    return services.get(ROOT + '/tag/get', {
       params,
       action: '获取单条标签内容'
     });
