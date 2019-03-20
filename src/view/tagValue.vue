@@ -10,7 +10,7 @@
       <el-table-column
         prop="id"
         label="id"
-        width="50">
+        width="80">
       </el-table-column>
       <el-table-column
         prop="name"
@@ -91,14 +91,14 @@
 
       <el-table-column
         label="操作"
-        width="200">
+        width="220">
         <template slot-scope="scope">
           <!--<el-button @click="handleClick(scope.row)" type="text" size="small">调整顺序</el-button>-->
           <span class="orderTitle">调整顺序</span>
           <el-input size="medium" class="orderValue" type="text" v-model.number="order[scope.row.id]" @blur="changeCategoryMove(scope.row.id)"></el-input>
 
           <el-tooltip class="item" effect="dark" content="修改上下线状态" placement="top-start">
-            <span class="orderTitle button" @click="TodoUpdateStatus(scope.row)">{{scope.row.status=== "Y" ? '上线' : '下线' }}</span>
+            <span class="orderTitle button" @click="TodoUpdateStatus(scope.row)">{{scope.row.status=== "0" ? '上线' : '下线' }}</span>
           </el-tooltip>
           <span class="orderTitle button" @click="getTagcategoryContent(scope.row.id)">修改</span>
         </template>
@@ -240,8 +240,7 @@
       getTagcategoryContent(id){
         agentApi
           .tagValueCategory({
-            ids: id,
-            cid: cid
+            id: id
           })
           .then(res => {
             utils.listAssign(this.form ,res.data);
@@ -280,7 +279,7 @@
       TodoUpdateStatus(value){
         let params = {
           id: value.id,
-          status: value.status==='Y'? 0 : 1
+          status: value.status==='1'? 0 : 1
         };
         agentApi
           .tagValueStatus(params)
@@ -299,7 +298,7 @@
         if(!this.order[value]){return false;}
         let params = {
           id: value,
-          site: this.order[value]
+          order: this.order[value]
         };
         agentApi
           .tagValueMove(params)
@@ -370,11 +369,13 @@
       cursor: pointer;
     }
     .el-input--medium.orderValue {
-      width: 40px;
+      width: 60px;
       height: 22px;
 
       .el-input__inner {
         height: 22px;
+        padding: 0 3px;
+        text-align: center;
       }
     }
   }
