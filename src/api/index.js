@@ -115,7 +115,7 @@ export default {
       action: '获取单条标签内容'
     });
   },
-  /************************************ 标签接口*************************************/
+  /************************************ 标签值接口*************************************/
   /**
    * 获取标签列表
    * @param params
@@ -170,6 +170,55 @@ export default {
     return services.get(ROOT + '/tagvalue/get', {
       params,
       action: '获取单条分类内容'
+    });
+  },
+  /************************************ 用户角色接口*************************************/
+  /**
+   * 获取用户角色列表
+   * @param params
+   */
+  privilegeList(params) {
+    return services.get(ROOT + '/privilege/list', {
+      params,
+      action: '获取用户角色列表'
+    });
+  },
+  /**
+   * 添加用户角色
+   * @param params
+   */
+  privilegeAdd(params) {
+    return services.post(ROOT + '/privilege/add', params, {
+      action: '添加用户角色'
+    });
+  },
+  /**
+   * 删除用户角色
+   * @param params
+   */
+  privilegeDelete(params) {
+    return services.get(ROOT + '/privilege/delete', {
+      params,
+      action: '删除用户角色'
+    });
+  },
+  /**
+   * 修改用户角色
+   * @param params
+   */
+  privilegeUpdate(params) {
+    return services.post(ROOT + '/privilege/update', params, {
+      action: '修改用户角色'
+    });
+  },
+  /**
+   * 获取单条用户角色内容
+   * @param params
+   */
+  privilegeGet(params) {
+    return services.get(ROOT + '/privilege/get', {
+      params,
+      action: '获取单条用户角色内容'
     });
   },
 };

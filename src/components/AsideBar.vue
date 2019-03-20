@@ -20,7 +20,7 @@ export default {
     return {
       menu: [
         { path: '/index/configList', label: '用户分类' },
-        { path: '/index/privilegeAction', label: '用户角色配置' },
+        { path: '/index/userRole', label: '用户角色配置' },
         { path: '/index/roleAction', label: '角色权限配置' }
       ],
       key: ''

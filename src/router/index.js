@@ -37,6 +37,18 @@ export default new Router({
           component: () => import("../view/tagValue"),
           meta: {title: "标签值"}
         },
+        {
+          path: "/index/roleAction",
+          name: "home",
+          component: () => import("../view/roleAction"),
+          meta: {title: "角色权限"}
+        },
+        {
+          path: "/index/userRole",
+          name: "home",
+          component: () => import("../view/userRole"),
+          meta: {title: "用户角色"}
+        },
       ]
     }
   ]
