@@ -22,8 +22,7 @@
       </el-table-column>
       <el-table-column
         prop="roleCode"
-        label="角色code"
-      >
+        label="角色code">
       </el-table-column>
 
       <el-table-column

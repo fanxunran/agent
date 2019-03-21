@@ -152,7 +152,8 @@
       return {
         typeTitle,
         typeValue: typeTitle.ADD,
-        tableData:[],
+        tableData:[
+        ],
         order: [],//调整顺序值
         status: null,
 
@@ -322,7 +323,7 @@
   }
   .middle-content {
     .el-table.el-table--fit {
-      /*overflow: scroll;*/
+      overflow: inherit;
       .el-table__header-wrapper {
         background: rgba(245, 245, 245, 1);
       }

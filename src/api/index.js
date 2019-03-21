@@ -221,4 +221,53 @@ export default {
       action: '获取单条用户角色内容'
     });
   },
+  /************************************ 角色权限接口*************************************/
+  /**
+   * 获取角色权限列表
+   * @param params
+   */
+  roleList(params) {
+    return services.get(ROOT + '/role/list', {
+      params,
+      action: '获取用户角色列表'
+    });
+  },
+  /**
+   * 添加角色权限
+   * @param params
+   */
+  roleAdd(params) {
+    return services.post(ROOT + '/role/add', params, {
+      action: '添加角色权限'
+    });
+  },
+  /**
+   * 删除角色权限
+   * @param params
+   */
+  roleDelete(params) {
+    return services.get(ROOT + '/role/delete', {
+      params,
+      action: '删除角色权限'
+    });
+  },
+  /**
+   * 修改角色权限
+   * @param params
+   */
+  roleUpdate(params) {
+    return services.post(ROOT + '/role/update', params, {
+      action: '修改角色权限'
+    });
+  },
+  /**
+   * 获取单条角色权限内容
+   * @param params
+   */
+  roleGet(params) {
+    return services.get(ROOT + '/role/get', {
+      params,
+      action: '获取单条角色权限内容'
+    });
+  },
 };
